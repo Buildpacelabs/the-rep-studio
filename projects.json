@@ -1,22 +1,202 @@
 [
-  { "slug": "forge-and-iron", "brand": "Forge & Iron", "cuisine": "Strength Gym", "city": "Bengaluru", "coords": "12.97°N 77.59°E", "from": "#2A2D33", "to": "#C56B3A", "built": false },
-  { "slug": "grit-box", "brand": "Grit Box", "cuisine": "Functional Fitness", "city": "Pune", "coords": "18.52°N 73.86°E", "from": "#1B1D1A", "to": "#C7F04A", "built": false },
-  { "slug": "prana-loft", "brand": "Prana Loft", "cuisine": "Yoga Studio", "city": "Rishikesh", "coords": "30.09°N 78.27°E", "from": "#7A6A54", "to": "#CBB68F", "built": false },
-  { "slug": "the-reformer-room", "brand": "The Reformer Room", "cuisine": "Pilates Studio", "city": "Mumbai", "coords": "19.08°N 72.88°E", "from": "#3A3236", "to": "#D8B8C0", "built": false },
-  { "slug": "cadence-cycle", "brand": "Cadence Cycle", "cuisine": "Indoor Cycling", "city": "Bengaluru", "coords": "12.97°N 77.60°E", "from": "#141018", "to": "#E23BC4", "built": false },
-  { "slug": "southpaw-boxing-club", "brand": "Southpaw Boxing Club", "cuisine": "Boxing Gym", "city": "New Delhi", "coords": "28.61°N 77.21°E", "from": "#171718", "to": "#C6312B", "built": false },
-  { "slug": "kinetic-lab", "brand": "Kinetic Lab", "cuisine": "Performance Training", "city": "Hyderabad", "coords": "17.39°N 78.49°E", "from": "#0F1622", "to": "#2E9BE0", "built": false },
-  { "slug": "lotus-strength", "brand": "Lotus Strength", "cuisine": "Women's Strength", "city": "Pune", "coords": "18.53°N 73.85°E", "from": "#4A2233", "to": "#D98AA6", "built": false },
-  { "slug": "barbell-union", "brand": "Barbell Union", "cuisine": "Powerlifting Gym", "city": "New Delhi", "coords": "28.53°N 77.22°E", "from": "#1A1B1D", "to": "#8A9096", "built": false },
-  { "slug": "ronin-martial-arts", "brand": "Ronin Martial Arts", "cuisine": "Martial Arts Academy", "city": "Bengaluru", "coords": "12.96°N 77.64°E", "from": "#14100F", "to": "#B8402E", "built": false },
-  { "slug": "barre-and-bloom", "brand": "Barre & Bloom", "cuisine": "Barre Studio", "city": "Mumbai", "coords": "18.94°N 72.83°E", "from": "#7A5A50", "to": "#E7C9A8", "built": false },
-  { "slug": "the-recovery-room", "brand": "The Recovery Room", "cuisine": "Recovery & Mobility", "city": "Bengaluru", "coords": "12.97°N 77.62°E", "from": "#1C3A3E", "to": "#6FC2C0", "built": false },
-  { "slug": "stride-collective", "brand": "Stride Collective", "cuisine": "Run Club", "city": "Bengaluru", "coords": "12.99°N 77.55°E", "from": "#181818", "to": "#F26522", "built": false },
-  { "slug": "chalk-and-crux", "brand": "Chalk & Crux", "cuisine": "Climbing Gym", "city": "Bengaluru", "coords": "12.93°N 77.62°E", "from": "#243044", "to": "#E4B23C", "built": false },
-  { "slug": "move-republic", "brand": "Move Republic", "cuisine": "Dance Fitness", "city": "Mumbai", "coords": "19.07°N 72.87°E", "from": "#3A1B4A", "to": "#F25CA2", "built": false },
-  { "slug": "sprout-sports-academy", "brand": "Sprout Sports Academy", "cuisine": "Kids Sports Academy", "city": "Pune", "coords": "18.52°N 73.86°E", "from": "#1E6E4A", "to": "#8FD24A", "built": false },
-  { "slug": "terrain-bootcamp", "brand": "Terrain Bootcamp", "cuisine": "Outdoor Bootcamp", "city": "Anjuna, Goa", "coords": "15.59°N 73.74°E", "from": "#3A3A28", "to": "#C7A44A", "built": false },
-  { "slug": "sanctum-wellness-club", "brand": "Sanctum Wellness Club", "cuisine": "Luxury Wellness Club", "city": "Mumbai", "coords": "18.96°N 72.82°E", "from": "#161514", "to": "#C7A15A", "built": false },
-  { "slug": "ashtanga-house", "brand": "Ashtanga House", "cuisine": "Ashtanga Yoga Shala", "city": "Mysuru", "coords": "12.30°N 76.65°E", "from": "#5A3A22", "to": "#D9A05B", "built": false },
-  { "slug": "rise-calisthenics", "brand": "Rise Calisthenics", "cuisine": "Calisthenics Gym", "city": "Bengaluru", "coords": "12.98°N 77.58°E", "from": "#1A1C20", "to": "#B6FF3C", "built": false }
+  {
+    "slug": "forge-and-iron",
+    "brand": "Forge & Iron",
+    "cuisine": "Strength Gym",
+    "city": "Bengaluru",
+    "coords": "12.97°N 77.59°E",
+    "from": "#2A2D33",
+    "to": "#C56B3A",
+    "built": true
+  },
+  {
+    "slug": "grit-box",
+    "brand": "Grit Box",
+    "cuisine": "Functional Fitness",
+    "city": "Pune",
+    "coords": "18.52°N 73.86°E",
+    "from": "#1B1D1A",
+    "to": "#C7F04A",
+    "built": true
+  },
+  {
+    "slug": "prana-loft",
+    "brand": "Prana Loft",
+    "cuisine": "Yoga Studio",
+    "city": "Rishikesh",
+    "coords": "30.09°N 78.27°E",
+    "from": "#7A6A54",
+    "to": "#CBB68F",
+    "built": true
+  },
+  {
+    "slug": "the-reformer-room",
+    "brand": "The Reformer Room",
+    "cuisine": "Pilates Studio",
+    "city": "Mumbai",
+    "coords": "19.08°N 72.88°E",
+    "from": "#3A3236",
+    "to": "#D8B8C0",
+    "built": true
+  },
+  {
+    "slug": "cadence-cycle",
+    "brand": "Cadence Cycle",
+    "cuisine": "Indoor Cycling",
+    "city": "Bengaluru",
+    "coords": "12.97°N 77.60°E",
+    "from": "#141018",
+    "to": "#E23BC4",
+    "built": true
+  },
+  {
+    "slug": "southpaw-boxing-club",
+    "brand": "Southpaw Boxing Club",
+    "cuisine": "Boxing Gym",
+    "city": "New Delhi",
+    "coords": "28.61°N 77.21°E",
+    "from": "#171718",
+    "to": "#C6312B",
+    "built": true
+  },
+  {
+    "slug": "kinetic-lab",
+    "brand": "Kinetic Lab",
+    "cuisine": "Performance Training",
+    "city": "Hyderabad",
+    "coords": "17.39°N 78.49°E",
+    "from": "#0F1622",
+    "to": "#2E9BE0",
+    "built": true
+  },
+  {
+    "slug": "lotus-strength",
+    "brand": "Lotus Strength",
+    "cuisine": "Women's Strength",
+    "city": "Pune",
+    "coords": "18.53°N 73.85°E",
+    "from": "#4A2233",
+    "to": "#D98AA6",
+    "built": true
+  },
+  {
+    "slug": "barbell-union",
+    "brand": "Barbell Union",
+    "cuisine": "Powerlifting Gym",
+    "city": "New Delhi",
+    "coords": "28.53°N 77.22°E",
+    "from": "#1A1B1D",
+    "to": "#8A9096",
+    "built": true
+  },
+  {
+    "slug": "ronin-martial-arts",
+    "brand": "Ronin Martial Arts",
+    "cuisine": "Martial Arts Academy",
+    "city": "Bengaluru",
+    "coords": "12.96°N 77.64°E",
+    "from": "#14100F",
+    "to": "#B8402E",
+    "built": true
+  },
+  {
+    "slug": "barre-and-bloom",
+    "brand": "Barre & Bloom",
+    "cuisine": "Barre Studio",
+    "city": "Mumbai",
+    "coords": "18.94°N 72.83°E",
+    "from": "#7A5A50",
+    "to": "#E7C9A8",
+    "built": true
+  },
+  {
+    "slug": "the-recovery-room",
+    "brand": "The Recovery Room",
+    "cuisine": "Recovery & Mobility",
+    "city": "Bengaluru",
+    "coords": "12.97°N 77.62°E",
+    "from": "#1C3A3E",
+    "to": "#6FC2C0",
+    "built": true
+  },
+  {
+    "slug": "stride-collective",
+    "brand": "Stride Collective",
+    "cuisine": "Run Club",
+    "city": "Bengaluru",
+    "coords": "12.99°N 77.55°E",
+    "from": "#181818",
+    "to": "#F26522",
+    "built": true
+  },
+  {
+    "slug": "chalk-and-crux",
+    "brand": "Chalk & Crux",
+    "cuisine": "Climbing Gym",
+    "city": "Bengaluru",
+    "coords": "12.93°N 77.62°E",
+    "from": "#243044",
+    "to": "#E4B23C",
+    "built": true
+  },
+  {
+    "slug": "move-republic",
+    "brand": "Move Republic",
+    "cuisine": "Dance Fitness",
+    "city": "Mumbai",
+    "coords": "19.07°N 72.87°E",
+    "from": "#3A1B4A",
+    "to": "#F25CA2",
+    "built": true
+  },
+  {
+    "slug": "sprout-sports-academy",
+    "brand": "Sprout Sports Academy",
+    "cuisine": "Kids Sports Academy",
+    "city": "Pune",
+    "coords": "18.52°N 73.86°E",
+    "from": "#1E6E4A",
+    "to": "#8FD24A",
+    "built": true
+  },
+  {
+    "slug": "terrain-bootcamp",
+    "brand": "Terrain Bootcamp",
+    "cuisine": "Outdoor Bootcamp",
+    "city": "Anjuna, Goa",
+    "coords": "15.59°N 73.74°E",
+    "from": "#3A3A28",
+    "to": "#C7A44A",
+    "built": true
+  },
+  {
+    "slug": "sanctum-wellness-club",
+    "brand": "Sanctum Wellness Club",
+    "cuisine": "Luxury Wellness Club",
+    "city": "Mumbai",
+    "coords": "18.96°N 72.82°E",
+    "from": "#161514",
+    "to": "#C7A15A",
+    "built": false
+  },
+  {
+    "slug": "ashtanga-house",
+    "brand": "Ashtanga House",
+    "cuisine": "Ashtanga Yoga Shala",
+    "city": "Mysuru",
+    "coords": "12.30°N 76.65°E",
+    "from": "#5A3A22",
+    "to": "#D9A05B",
+    "built": false
+  },
+  {
+    "slug": "rise-calisthenics",
+    "brand": "Rise Calisthenics",
+    "cuisine": "Calisthenics Gym",
+    "city": "Bengaluru",
+    "coords": "12.98°N 77.58°E",
+    "from": "#1A1C20",
+    "to": "#B6FF3C",
+    "built": false
+  }
 ]

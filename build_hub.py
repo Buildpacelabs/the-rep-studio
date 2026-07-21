@@ -42,19 +42,31 @@ def card(p):
                  f'<span>{esc(p["brand"])}</span></div>')
     return f'''      <a class="card" href="{slug}/" aria-label="View the live {esc(p["brand"])} site">
         <span class="card-accent" style="background:{grad}" aria-hidden="true"></span>
-        <div class="card-thumb">{thumb}</div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">{slug}</span></div>
+          <div class="card-thumb">{thumb}
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">{esc(p["cuisine"])}</span>
-            <span class="card-geo">{esc(p["city"])} &middot; <span class="coords">{esc(p["coords"])}</span></span>
+            <span class="card-geo">{esc(p["city"])}</span>
           </div>
           <h3 class="card-name">{esc(p["brand"])}</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>'''
 
 cards_html = "\n".join(card(p) for p in built) if built else \
     '      <p class="grid-empty">The first brands are coming online now — check back shortly.</p>'
+
+# ---- hero preview: a fanned deck of the first few live sites ----
+def pv_card(p, i):
+    shot = f"assets/shots/{p['slug']}.jpg"
+    return (f'<span class="pv pv{i}"><span class="pv-bar"><i></i><i></i><i></i></span>'
+            f'<img src="{shot}" width="1440" height="900" loading="eager" fetchpriority="high" '
+            f'decoding="async" alt=""></span>')
+hero_preview = "".join(pv_card(p, i) for i, p in enumerate(built[:3])) if len(built) >= 2 else ""
 
 og_image = f"{BASE}/assets/shots/{built[0]['slug']}.jpg" if built else f"{BASE}/assets/og-cover.png"
 
@@ -63,6 +75,7 @@ CSS = """
       --bg:#0D0E11; --bg-2:#121317; --surface:#16181D; --ink:#F2F3F5; --ink-soft:#AEB4BC;
       --ink-faint:#7C828B; --line:#262A31; --line-soft:#1F232A;
       --volt:#C7F04A; --volt-deep:#B6E23A; --heat:#FF5A1F;
+      --accent:var(--volt); --accent-deep:var(--volt-deep);
       --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px rgba(0,0,0,.4);
       --shadow-lg:0 2px 8px rgba(0,0,0,.5),0 34px 70px rgba(0,0,0,.6);
       --ease:cubic-bezier(.16,1,.3,1);
@@ -94,7 +107,26 @@ CSS = """
     .nav-cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
     @media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
 
-    .hero{padding:90px 0 42px;position:relative}
+    .hero{padding:72px 0 34px;position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+      gap:clamp(24px,4vw,56px);align-items:center}
+    @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
+    .hero-copy{min-width:0}
+    .hero-preview{position:relative;height:clamp(300px,30vw,410px);min-width:0}
+    @media(max-width:900px){.hero-preview{height:320px;max-width:480px;width:100%;margin:0 auto}}
+    @media(max-width:520px){.hero-preview{display:none}}
+    .pv{position:absolute;border-radius:13px;overflow:hidden;background:var(--surface);
+      border:1px solid var(--line);box-shadow:var(--shadow-lg);transition:transform .5s var(--ease)}
+    .pv-bar{display:flex;align-items:center;gap:5px;height:23px;padding:0 11px;
+      background:var(--bg-2);border-bottom:1px solid var(--line)}
+    .pv-bar i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+    .pv img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;display:block}
+    .pv0{width:64%;top:0;left:1%;z-index:3;transform:rotate(-4deg)}
+    .pv1{width:57%;top:25%;right:0;z-index:2;transform:rotate(3.5deg)}
+    .pv2{width:50%;bottom:1%;left:15%;z-index:1;transform:rotate(-1.5deg)}
+    .hero-preview:hover .pv0{transform:rotate(-6deg) translateY(-6px)}
+    .hero-preview:hover .pv1{transform:rotate(5deg) translate(6px,-4px)}
+    .hero-preview:hover .pv2{transform:rotate(-2.5deg) translateY(4px)}
     .hero::before{content:"";position:absolute;inset:-10% 0 auto 40%;height:420px;
       background:radial-gradient(closest-side,color-mix(in srgb,var(--volt) 14%,transparent),transparent);
       pointer-events:none;filter:blur(10px)}
@@ -141,10 +173,23 @@ CSS = """
       opacity:0;transform:translateY(22px)}
     .card.in{opacity:1;transform:none}
     .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--volt) 40%,var(--line))}
-    .card-accent{position:absolute;inset:0 0 auto 0;height:4px;z-index:2}
-    .card-thumb{aspect-ratio:16/10;overflow:hidden;background:var(--line-soft);border-bottom:1px solid var(--line)}
+    .card-accent{position:absolute;inset:0 0 auto 0;height:4px;z-index:4}
+    .card-frame{position:relative}
+    .card-chrome{display:flex;align-items:center;gap:9px;height:33px;padding:0 12px;
+      background:var(--bg-2);border-bottom:1px solid var(--line)}
+    .card-dots{display:inline-flex;gap:5px;flex:0 0 auto}
+    .card-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);opacity:.95}
+    .card-url{font-family:var(--mono);font-size:.66rem;letter-spacing:.02em;color:var(--ink-faint);
+      background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 10px;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:76%}
+    .card-thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--line-soft);border-bottom:1px solid var(--line)}
     .card-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s var(--ease)}
     .card:hover .card-thumb img{transform:scale(1.05)}
+    .card-open{position:absolute;bottom:12px;right:12px;z-index:3;display:inline-flex;align-items:center;gap:6px;
+      font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;background:var(--accent-deep);
+      padding:7px 13px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.28);
+      opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+    .card:hover .card-open,.card:focus-visible .card-open{opacity:1;transform:none}
     .thumb-fallback{width:100%;height:100%;display:grid;place-items:center;padding:20px;text-align:center}
     .thumb-fallback span{font-family:var(--disp);font-weight:800;font-size:1.4rem;color:#fff;text-transform:uppercase;
       text-shadow:0 2px 12px rgba(0,0,0,.4)}
@@ -157,10 +202,6 @@ CSS = """
     .card-geo .coords{font-family:var(--mono);font-size:.72rem}
     .card-name{font-family:var(--disp);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;
       text-transform:uppercase;margin-top:2px}
-    .card-live{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-weight:700;
-      font-size:.9rem;color:var(--volt)}
-    .card-live svg{transition:transform .25s var(--ease)}
-    .card:hover .card-live svg{transform:translate(3px,-3px)}
 
     .studio{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
     .services{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:8px}
@@ -259,15 +300,20 @@ html = f"""<!DOCTYPE html>
   </header>
 
   <main>
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <span class="eyebrow">Fitness &amp; wellness digital studio &middot; A BuildspaceLabs atelier</span>
-      <h1 id="hero-title">We build fitness brands people <em>show up</em> for.</h1>
-      <p class="lead">Great gyms lose members to forgettable websites. We rebuild studios, boxes and wellness brands into fast, high-energy sites that fill classes and sell memberships — mobile-first, and unmistakably their own.</p>
-      <div class="hero-actions">
-        <a class="btn btn-solid" href="#work">Selected work
-          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="#start">Start a project</a>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Fitness &amp; wellness digital studio &middot; A BuildspaceLabs atelier</span>
+          <h1 id="hero-title">We build fitness brands people <em>show up</em> for.</h1>
+          <p class="lead">Great gyms lose members to forgettable websites. We rebuild studios, boxes and wellness brands into fast, high-energy sites that fill classes and sell memberships — mobile-first, and unmistakably their own.</p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#work">Selected work
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#start">Start a project</a>
+          </div>
+        </div>
+        <div class="hero-preview" aria-hidden="true">{hero_preview}</div>
       </div>
     </section>
 

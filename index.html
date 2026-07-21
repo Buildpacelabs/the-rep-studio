@@ -38,6 +38,7 @@
       --bg:#0D0E11; --bg-2:#121317; --surface:#16181D; --ink:#F2F3F5; --ink-soft:#AEB4BC;
       --ink-faint:#7C828B; --line:#262A31; --line-soft:#1F232A;
       --volt:#C7F04A; --volt-deep:#B6E23A; --heat:#FF5A1F;
+      --accent:var(--volt); --accent-deep:var(--volt-deep);
       --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px rgba(0,0,0,.4);
       --shadow-lg:0 2px 8px rgba(0,0,0,.5),0 34px 70px rgba(0,0,0,.6);
       --ease:cubic-bezier(.16,1,.3,1);
@@ -69,7 +70,26 @@
     .nav-cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
     @media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
 
-    .hero{padding:90px 0 42px;position:relative}
+    .hero{padding:72px 0 34px;position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+      gap:clamp(24px,4vw,56px);align-items:center}
+    @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
+    .hero-copy{min-width:0}
+    .hero-preview{position:relative;height:clamp(300px,30vw,410px);min-width:0}
+    @media(max-width:900px){.hero-preview{height:320px;max-width:480px;width:100%;margin:0 auto}}
+    @media(max-width:520px){.hero-preview{display:none}}
+    .pv{position:absolute;border-radius:13px;overflow:hidden;background:var(--surface);
+      border:1px solid var(--line);box-shadow:var(--shadow-lg);transition:transform .5s var(--ease)}
+    .pv-bar{display:flex;align-items:center;gap:5px;height:23px;padding:0 11px;
+      background:var(--bg-2);border-bottom:1px solid var(--line)}
+    .pv-bar i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+    .pv img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;display:block}
+    .pv0{width:64%;top:0;left:1%;z-index:3;transform:rotate(-4deg)}
+    .pv1{width:57%;top:25%;right:0;z-index:2;transform:rotate(3.5deg)}
+    .pv2{width:50%;bottom:1%;left:15%;z-index:1;transform:rotate(-1.5deg)}
+    .hero-preview:hover .pv0{transform:rotate(-6deg) translateY(-6px)}
+    .hero-preview:hover .pv1{transform:rotate(5deg) translate(6px,-4px)}
+    .hero-preview:hover .pv2{transform:rotate(-2.5deg) translateY(4px)}
     .hero::before{content:"";position:absolute;inset:-10% 0 auto 40%;height:420px;
       background:radial-gradient(closest-side,color-mix(in srgb,var(--volt) 14%,transparent),transparent);
       pointer-events:none;filter:blur(10px)}
@@ -116,10 +136,23 @@
       opacity:0;transform:translateY(22px)}
     .card.in{opacity:1;transform:none}
     .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--volt) 40%,var(--line))}
-    .card-accent{position:absolute;inset:0 0 auto 0;height:4px;z-index:2}
-    .card-thumb{aspect-ratio:16/10;overflow:hidden;background:var(--line-soft);border-bottom:1px solid var(--line)}
+    .card-accent{position:absolute;inset:0 0 auto 0;height:4px;z-index:4}
+    .card-frame{position:relative}
+    .card-chrome{display:flex;align-items:center;gap:9px;height:33px;padding:0 12px;
+      background:var(--bg-2);border-bottom:1px solid var(--line)}
+    .card-dots{display:inline-flex;gap:5px;flex:0 0 auto}
+    .card-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);opacity:.95}
+    .card-url{font-family:var(--mono);font-size:.66rem;letter-spacing:.02em;color:var(--ink-faint);
+      background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 10px;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:76%}
+    .card-thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--line-soft);border-bottom:1px solid var(--line)}
     .card-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s var(--ease)}
     .card:hover .card-thumb img{transform:scale(1.05)}
+    .card-open{position:absolute;bottom:12px;right:12px;z-index:3;display:inline-flex;align-items:center;gap:6px;
+      font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;background:var(--accent-deep);
+      padding:7px 13px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.28);
+      opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+    .card:hover .card-open,.card:focus-visible .card-open{opacity:1;transform:none}
     .thumb-fallback{width:100%;height:100%;display:grid;place-items:center;padding:20px;text-align:center}
     .thumb-fallback span{font-family:var(--disp);font-weight:800;font-size:1.4rem;color:#fff;text-transform:uppercase;
       text-shadow:0 2px 12px rgba(0,0,0,.4)}
@@ -132,10 +165,6 @@
     .card-geo .coords{font-family:var(--mono);font-size:.72rem}
     .card-name{font-family:var(--disp);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;
       text-transform:uppercase;margin-top:2px}
-    .card-live{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-weight:700;
-      font-size:.9rem;color:var(--volt)}
-    .card-live svg{transition:transform .25s var(--ease)}
-    .card:hover .card-live svg{transform:translate(3px,-3px)}
 
     .studio{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
     .services{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:8px}
@@ -193,15 +222,20 @@
   </header>
 
   <main>
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <span class="eyebrow">Fitness &amp; wellness digital studio &middot; A BuildspaceLabs atelier</span>
-      <h1 id="hero-title">We build fitness brands people <em>show up</em> for.</h1>
-      <p class="lead">Great gyms lose members to forgettable websites. We rebuild studios, boxes and wellness brands into fast, high-energy sites that fill classes and sell memberships — mobile-first, and unmistakably their own.</p>
-      <div class="hero-actions">
-        <a class="btn btn-solid" href="#work">Selected work
-          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="#start">Start a project</a>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Fitness &amp; wellness digital studio &middot; A BuildspaceLabs atelier</span>
+          <h1 id="hero-title">We build fitness brands people <em>show up</em> for.</h1>
+          <p class="lead">Great gyms lose members to forgettable websites. We rebuild studios, boxes and wellness brands into fast, high-energy sites that fill classes and sell memberships — mobile-first, and unmistakably their own.</p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#work">Selected work
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#start">Start a project</a>
+          </div>
+        </div>
+        <div class="hero-preview" aria-hidden="true"><span class="pv pv0"><span class="pv-bar"><i></i><i></i><i></i></span><img src="assets/shots/forge-and-iron.jpg" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" alt=""></span><span class="pv pv1"><span class="pv-bar"><i></i><i></i><i></i></span><img src="assets/shots/cinderblock-fitness.jpg" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" alt=""></span><span class="pv pv2"><span class="pv-bar"><i></i><i></i><i></i></span><img src="assets/shots/prana-loft.jpg" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" alt=""></span></div>
       </div>
     </section>
 
@@ -216,242 +250,322 @@
       <div class="grid">
       <a class="card" href="forge-and-iron/" aria-label="View the live Forge &amp; Iron site">
         <span class="card-accent" style="background:linear-gradient(135deg,#2A2D33,#C56B3A)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/forge-and-iron.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Forge &amp; Iron, a strength gym website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">forge-and-iron</span></div>
+          <div class="card-thumb"><img src="assets/shots/forge-and-iron.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Forge &amp; Iron, a strength gym website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Strength Gym</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.97°N 77.59°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Forge &amp; Iron</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="cinderblock-fitness/" aria-label="View the live Cinderblock Fitness site">
         <span class="card-accent" style="background:linear-gradient(135deg,#1B1D1A,#C7F04A)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/cinderblock-fitness.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Cinderblock Fitness, a functional fitness website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">cinderblock-fitness</span></div>
+          <div class="card-thumb"><img src="assets/shots/cinderblock-fitness.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Cinderblock Fitness, a functional fitness website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Functional Fitness</span>
-            <span class="card-geo">Pune &middot; <span class="coords">18.52°N 73.86°E</span></span>
+            <span class="card-geo">Pune</span>
           </div>
           <h3 class="card-name">Cinderblock Fitness</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="prana-loft/" aria-label="View the live Prana Loft site">
         <span class="card-accent" style="background:linear-gradient(135deg,#7A6A54,#CBB68F)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/prana-loft.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Prana Loft, a yoga studio website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">prana-loft</span></div>
+          <div class="card-thumb"><img src="assets/shots/prana-loft.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Prana Loft, a yoga studio website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Yoga Studio</span>
-            <span class="card-geo">Rishikesh &middot; <span class="coords">30.09°N 78.27°E</span></span>
+            <span class="card-geo">Rishikesh</span>
           </div>
           <h3 class="card-name">Prana Loft</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="springline-pilates/" aria-label="View the live Springline Pilates site">
         <span class="card-accent" style="background:linear-gradient(135deg,#3A3236,#D8B8C0)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/springline-pilates.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Springline Pilates, a pilates studio website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">springline-pilates</span></div>
+          <div class="card-thumb"><img src="assets/shots/springline-pilates.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Springline Pilates, a pilates studio website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Pilates Studio</span>
-            <span class="card-geo">Mumbai &middot; <span class="coords">19.08°N 72.88°E</span></span>
+            <span class="card-geo">Mumbai</span>
           </div>
           <h3 class="card-name">Springline Pilates</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="voltage-ride-house/" aria-label="View the live Voltage Ride House site">
         <span class="card-accent" style="background:linear-gradient(135deg,#141018,#E23BC4)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/voltage-ride-house.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Voltage Ride House, a indoor cycling website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">voltage-ride-house</span></div>
+          <div class="card-thumb"><img src="assets/shots/voltage-ride-house.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Voltage Ride House, a indoor cycling website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Indoor Cycling</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.97°N 77.60°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Voltage Ride House</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="southpaw-boxing-club/" aria-label="View the live Southpaw Boxing Club site">
         <span class="card-accent" style="background:linear-gradient(135deg,#171718,#C6312B)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/southpaw-boxing-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Southpaw Boxing Club, a boxing gym website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">southpaw-boxing-club</span></div>
+          <div class="card-thumb"><img src="assets/shots/southpaw-boxing-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Southpaw Boxing Club, a boxing gym website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Boxing Gym</span>
-            <span class="card-geo">New Delhi &middot; <span class="coords">28.61°N 77.21°E</span></span>
+            <span class="card-geo">New Delhi</span>
           </div>
           <h3 class="card-name">Southpaw Boxing Club</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="slipstream-performance/" aria-label="View the live Slipstream Performance site">
         <span class="card-accent" style="background:linear-gradient(135deg,#0F1622,#2E9BE0)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/slipstream-performance.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Slipstream Performance, a performance training website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">slipstream-performance</span></div>
+          <div class="card-thumb"><img src="assets/shots/slipstream-performance.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Slipstream Performance, a performance training website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Performance Training</span>
-            <span class="card-geo">Hyderabad &middot; <span class="coords">17.39°N 78.49°E</span></span>
+            <span class="card-geo">Hyderabad</span>
           </div>
           <h3 class="card-name">Slipstream Performance</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="lotus-strength/" aria-label="View the live Lotus Strength site">
         <span class="card-accent" style="background:linear-gradient(135deg,#4A2233,#D98AA6)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/lotus-strength.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Lotus Strength, a women's strength website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">lotus-strength</span></div>
+          <div class="card-thumb"><img src="assets/shots/lotus-strength.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Lotus Strength, a women's strength website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Women's Strength</span>
-            <span class="card-geo">Pune &middot; <span class="coords">18.53°N 73.85°E</span></span>
+            <span class="card-geo">Pune</span>
           </div>
           <h3 class="card-name">Lotus Strength</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="platform-45/" aria-label="View the live Platform 45 site">
         <span class="card-accent" style="background:linear-gradient(135deg,#1A1B1D,#8A9096)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/platform-45.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Platform 45, a powerlifting gym website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">platform-45</span></div>
+          <div class="card-thumb"><img src="assets/shots/platform-45.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Platform 45, a powerlifting gym website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Powerlifting Gym</span>
-            <span class="card-geo">New Delhi &middot; <span class="coords">28.53°N 77.22°E</span></span>
+            <span class="card-geo">New Delhi</span>
           </div>
           <h3 class="card-name">Platform 45</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="shastra-combat-academy/" aria-label="View the live Shastra Combat Academy site">
         <span class="card-accent" style="background:linear-gradient(135deg,#14100F,#B8402E)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/shastra-combat-academy.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Shastra Combat Academy, a martial arts academy website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">shastra-combat-academy</span></div>
+          <div class="card-thumb"><img src="assets/shots/shastra-combat-academy.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Shastra Combat Academy, a martial arts academy website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Martial Arts Academy</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.96°N 77.64°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Shastra Combat Academy</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="barre-and-bloom/" aria-label="View the live Barre &amp; Bloom site">
         <span class="card-accent" style="background:linear-gradient(135deg,#7A5A50,#E7C9A8)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/barre-and-bloom.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Barre &amp; Bloom, a barre studio website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">barre-and-bloom</span></div>
+          <div class="card-thumb"><img src="assets/shots/barre-and-bloom.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Barre &amp; Bloom, a barre studio website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Barre Studio</span>
-            <span class="card-geo">Mumbai &middot; <span class="coords">18.94°N 72.83°E</span></span>
+            <span class="card-geo">Mumbai</span>
           </div>
           <h3 class="card-name">Barre &amp; Bloom</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="coldfront-recovery/" aria-label="View the live Coldfront Recovery site">
         <span class="card-accent" style="background:linear-gradient(135deg,#1C3A3E,#6FC2C0)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/coldfront-recovery.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Coldfront Recovery, a recovery &amp; mobility website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">coldfront-recovery</span></div>
+          <div class="card-thumb"><img src="assets/shots/coldfront-recovery.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Coldfront Recovery, a recovery &amp; mobility website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Recovery &amp; Mobility</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.97°N 77.62°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Coldfront Recovery</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="tarmac-run-club/" aria-label="View the live Tarmac Run Club site">
         <span class="card-accent" style="background:linear-gradient(135deg,#181818,#F26522)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/tarmac-run-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Tarmac Run Club, a run club website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">tarmac-run-club</span></div>
+          <div class="card-thumb"><img src="assets/shots/tarmac-run-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Tarmac Run Club, a run club website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Run Club</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.99°N 77.55°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Tarmac Run Club</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="chalk-and-crux/" aria-label="View the live Chalk &amp; Crux site">
         <span class="card-accent" style="background:linear-gradient(135deg,#243044,#E4B23C)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/chalk-and-crux.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Chalk &amp; Crux, a climbing gym website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">chalk-and-crux</span></div>
+          <div class="card-thumb"><img src="assets/shots/chalk-and-crux.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Chalk &amp; Crux, a climbing gym website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Climbing Gym</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.93°N 77.62°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Chalk &amp; Crux</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="move-republic/" aria-label="View the live Move Republic site">
         <span class="card-accent" style="background:linear-gradient(135deg,#3A1B4A,#F25CA2)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/move-republic.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Move Republic, a dance fitness website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">move-republic</span></div>
+          <div class="card-thumb"><img src="assets/shots/move-republic.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Move Republic, a dance fitness website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Dance Fitness</span>
-            <span class="card-geo">Mumbai &middot; <span class="coords">19.07°N 72.87°E</span></span>
+            <span class="card-geo">Mumbai</span>
           </div>
           <h3 class="card-name">Move Republic</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="sprout-sports-academy/" aria-label="View the live Sprout Sports Academy site">
         <span class="card-accent" style="background:linear-gradient(135deg,#1E6E4A,#8FD24A)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/sprout-sports-academy.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Sprout Sports Academy, a kids sports academy website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">sprout-sports-academy</span></div>
+          <div class="card-thumb"><img src="assets/shots/sprout-sports-academy.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Sprout Sports Academy, a kids sports academy website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Kids Sports Academy</span>
-            <span class="card-geo">Pune &middot; <span class="coords">18.52°N 73.86°E</span></span>
+            <span class="card-geo">Pune</span>
           </div>
           <h3 class="card-name">Sprout Sports Academy</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="terrain-bootcamp/" aria-label="View the live Terrain Bootcamp site">
         <span class="card-accent" style="background:linear-gradient(135deg,#3A3A28,#C7A44A)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/terrain-bootcamp.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Terrain Bootcamp, a outdoor bootcamp website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">terrain-bootcamp</span></div>
+          <div class="card-thumb"><img src="assets/shots/terrain-bootcamp.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Terrain Bootcamp, a outdoor bootcamp website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Outdoor Bootcamp</span>
-            <span class="card-geo">Anjuna, Goa &middot; <span class="coords">15.59°N 73.74°E</span></span>
+            <span class="card-geo">Anjuna, Goa</span>
           </div>
           <h3 class="card-name">Terrain Bootcamp</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="vanya-wellness-club/" aria-label="View the live Vanya Wellness Club site">
         <span class="card-accent" style="background:linear-gradient(135deg,#161514,#C7A15A)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/vanya-wellness-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Vanya Wellness Club, a luxury wellness club website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">vanya-wellness-club</span></div>
+          <div class="card-thumb"><img src="assets/shots/vanya-wellness-club.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Vanya Wellness Club, a luxury wellness club website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Luxury Wellness Club</span>
-            <span class="card-geo">Mumbai &middot; <span class="coords">18.96°N 72.82°E</span></span>
+            <span class="card-geo">Mumbai</span>
           </div>
           <h3 class="card-name">Vanya Wellness Club</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="ujjayi-house/" aria-label="View the live Ujjayi House site">
         <span class="card-accent" style="background:linear-gradient(135deg,#5A3A22,#D9A05B)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/ujjayi-house.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Ujjayi House, a ashtanga yoga shala website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">ujjayi-house</span></div>
+          <div class="card-thumb"><img src="assets/shots/ujjayi-house.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Ujjayi House, a ashtanga yoga shala website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Ashtanga Yoga Shala</span>
-            <span class="card-geo">Mysuru &middot; <span class="coords">12.30°N 76.65°E</span></span>
+            <span class="card-geo">Mysuru</span>
           </div>
           <h3 class="card-name">Ujjayi House</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       <a class="card" href="rise-calisthenics/" aria-label="View the live Rise Calisthenics site">
         <span class="card-accent" style="background:linear-gradient(135deg,#1A1C20,#B6FF3C)" aria-hidden="true"></span>
-        <div class="card-thumb"><img src="assets/shots/rise-calisthenics.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Rise Calisthenics, a calisthenics gym website built by The Rep Studio"></div>
+        <div class="card-frame">
+          <div class="card-chrome" aria-hidden="true"><span class="card-dots"><i></i><i></i><i></i></span><span class="card-url">rise-calisthenics</span></div>
+          <div class="card-thumb"><img src="assets/shots/rise-calisthenics.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Home page of Rise Calisthenics, a calisthenics gym website built by The Rep Studio">
+            <span class="card-open">View live<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </div>
+        </div>
         <div class="card-body">
           <div class="card-meta">
             <span class="card-tag">Calisthenics Gym</span>
-            <span class="card-geo">Bengaluru &middot; <span class="coords">12.98°N 77.58°E</span></span>
+            <span class="card-geo">Bengaluru</span>
           </div>
           <h3 class="card-name">Rise Calisthenics</h3>
-          <span class="card-live">View live<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
         </div>
       </a>
       </div>
